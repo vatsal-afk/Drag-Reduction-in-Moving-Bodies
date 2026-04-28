@@ -9,11 +9,15 @@ __pycache__/
 bump
 smooth
 dimpled
-main
 sim_*
 a.out
 *.o
 *.s
+*.pvsm
+
+golf_ball/2d/main/smooth.pvsm
+
+golf_ball/2d/main/bumpy.pvsm
 
 # --- Simulation Data (Large Files) ---
 *.vtu
