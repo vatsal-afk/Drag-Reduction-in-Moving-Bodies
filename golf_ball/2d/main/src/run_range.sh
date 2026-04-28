@@ -2,6 +2,18 @@
 # run_range.sh - Run Basilisk simulation over a range of Reynolds numbers
 set -e
 
+# Make sure output_vtu.h exists in this directory before compiling
+if [ ! -f "output_vtu.h" ]; then
+    echo "output_vtu.h not found in current directory. Attempting to locate it..."
+    if [ -f "../../../3d/output_vtu.h" ]; then
+        echo "Found output_vtu.h in 3d folder, copying it here."
+        cp "../../../3d/output_vtu.h" .
+    else
+        echo "ERROR: output_vtu.h is missing. Please add it to src/."
+        exit 1
+    fi
+fi
+
 # Compile the code
 echo "Compiling..."
 qcc -O2 -Wall -D_MPI=1 -DBUMPY test_final.c -o test_final -lm
