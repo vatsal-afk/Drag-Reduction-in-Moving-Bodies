@@ -4,7 +4,7 @@ set -e
 
 # Compile the code
 echo "Compiling..."
-qcc -O2 -Wall -D_MPI=1 -DBUMPY test_final.c -o test_final -lm
+qcc -O2 -Wall -DBUMPY test_final.c -o test_final -lm
 
 # Array of Reynolds numbers (laminar to turbulent)
 RE_LIST=("100" "500" "1000" "5000" "50000" "100000")
