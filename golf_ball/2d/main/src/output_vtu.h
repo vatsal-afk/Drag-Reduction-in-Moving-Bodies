@@ -55,7 +55,7 @@ static void output_vtu (scalar * scalars, vector * vectors,
   fputs("        <DataArray type=\"Float64\" NumberOfComponents=\"3\" "
         "format=\"ascii\">\n", fp);
 
-  foreach() {
+  foreach(serial) {
 #if dimension == 3
     /* 8 vertices of the hexahedron */
     for (int dz = 0; dz <= 1; dz++)
@@ -85,7 +85,7 @@ static void output_vtu (scalar * scalars, vector * vectors,
         "format=\"ascii\">\n", fp);
   {
     long idx = 0;
-    foreach() {
+    foreach(serial) {
 #if dimension == 3
       /* Hexahedron vertex ordering per VTK convention */
       fprintf(fp, "          %ld %ld %ld %ld %ld %ld %ld %ld\n",
@@ -105,7 +105,7 @@ static void output_vtu (scalar * scalars, vector * vectors,
         "format=\"ascii\">\n", fp);
   {
     long off = 0;
-    foreach() {
+    foreach(serial) {
       off += verts_per_cell;
       fprintf(fp, "          %ld\n", off);
     }
@@ -115,7 +115,7 @@ static void output_vtu (scalar * scalars, vector * vectors,
   /* types */
   fputs("        <DataArray type=\"UInt8\" Name=\"types\" "
         "format=\"ascii\">\n", fp);
-  foreach()
+  foreach(serial)
     fprintf(fp, "          %d\n", cell_type);
   fputs("        </DataArray>\n", fp);
 
@@ -127,7 +127,7 @@ static void output_vtu (scalar * scalars, vector * vectors,
   /* Level (always useful for AMR visualization) */
   fputs("        <DataArray type=\"Int32\" Name=\"level\" "
         "format=\"ascii\">\n", fp);
-  foreach()
+  foreach(serial)
     fprintf(fp, "          %d\n", level);
   fputs("        </DataArray>\n", fp);
 
@@ -135,7 +135,7 @@ static void output_vtu (scalar * scalars, vector * vectors,
   for (scalar s in scalars) {
     fprintf(fp, "        <DataArray type=\"Float64\" Name=\"%s\" "
             "format=\"ascii\">\n", s.name);
-    foreach()
+    foreach(serial)
       fprintf(fp, "          %g\n", val(s));
     fputs("        </DataArray>\n", fp);
   }
@@ -144,7 +144,7 @@ static void output_vtu (scalar * scalars, vector * vectors,
   for (vector v in vectors) {
     fprintf(fp, "        <DataArray type=\"Float64\" Name=\"%s\" "
             "NumberOfComponents=\"3\" format=\"ascii\">\n", v.x.name);
-    foreach()
+    foreach(serial)
 #if dimension == 3
       fprintf(fp, "          %g %g %g\n", val(v.x), val(v.y), val(v.z));
 #else
